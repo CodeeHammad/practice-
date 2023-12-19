@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading Panel</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background-color: darkgrey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      article {
+        background-color: grey;
+        border-radius: 5px;
+        outline-style: solid;
+        height: 460px;
+      }
+      .container {
+        margin-top: 30px;
+        height: 80px;
+        width: 100%;
+        border: 2px solid black;
+        border-radius: 30px;
+        border: none;
+        outline-style: double;
+        overflow: hidden;
+      }
+      .loading {
+        height: 100%;
+        width: 1%;
+        background-color: grey;
+      }
+      .start {
+        height: 40px;
+        width: 150px;
+        font-size: 25px;
+        outline: 0;
+        border: 0;
+        border-radius: 15px;
+        background-color: rgb(79, 76, 76);
+        color: white;
+      }
+      .stop {
+        height: 40px;
+        width: 150px;
+        border-radius: 15px;
+        background-color: rgb(79, 76, 76);
+        color: white;
+        font-size: 25px;
+        outline: 0;
+        border: 0;
+      }
+      .pause {
+        height: 40px;
+        width: 150px;
+        outline: 0;
+        border: 0;
+        border-radius: 15px;
+        background-color: rgb(79, 76, 76);
+        color: white;
+        font-size: 25px;
+      }
+      .button-con {
+        padding: 15px;
+      }
+      .txt1 {
+        margin-top: 30px;
+        font-size: 26px;
+        font-weight: bolder;
+        text-align: center;
+        line-height: 100%;
+      }
+      hr {
+        font-size: 25px;
+        border: 3px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <article>
+        <div class="button-con">
+          <button class="start" id="start" onclick="start()">START</button>
+          <button class="pause" id="pause" onclick="pauseResume()">
+            PAUSE
+          </button>
+          <button class="stop" id="stop" onclick="stop()">CLEAR</button>
+        </div>
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <div class="txt1">
+          Loading: <span class="percentage" id="percentage">%</span>
+        </div>
+        <div class="container">
+          <div class="loading" id="loading"></div>
+        </div>
+      </article>
+    </section>
+
+    <script>
+      var count = 1;
+      var item;
+      isPause = false;
+
+      function start() {
+        item = setInterval(doit, 100);
+        function doit() {
+          if (!isPause) {
+            if (count >= 101) {
+              clearInterval(item);
+            } else if (count >= 80) {
+              document.getElementById("loading").style.width = count + "%";
+              document.getElementById("loading").style.background = "red";
+              document.getElementById("percentage").innerText = count + "%";
+            } else if (count >= 60) {
+              document.getElementById("loading").style.width = count + "%";
+              document.getElementById("loading").style.background = "orange";
+              document.getElementById("percentage").innerText = count + "%";
+            } else if (count >= 40) {
+              document.getElementById("loading").style.width = count + "%";
+              document.getElementById("loading").style.background = "yellow";
+              document.getElementById("percentage").innerText = count + "%";
+            } else if (count >= 20) {
+              document.getElementById("loading").style.width = count + "%";
+              document.getElementById("loading").style.background = "green";
+              document.getElementById("percentage").innerText = count + "%";
+            } else {
+              document.getElementById("loading").style.width = count + "%";
+              document.getElementById("loading").style.background = "skyblue";
+              document.getElementById("percentage").innerText = count + "%";
+            }
+            count++;
+          }
+        }
+      }
+      function stop() {
+        clearInterval(item);
+        count = 1;
+        ispause = false;
+        document.getElementById("loading").style.width = count;
+        document.getElementById("loading").style.background = "grey";
+        document.getElementById("percentage").innerText = "0 %";
+      }
+      function pauseResume() {
+        isPause = !isPause;
+        if (isPause) {
+          clearInterval(item);
+          document.getElementById("pause").innerText = "RESUME";
+        } else {
+          start();
+          document.getElementById("pause").innerText = "PAUSE";
+        }
+      }
+    </script>
+  </body>
+</html>
